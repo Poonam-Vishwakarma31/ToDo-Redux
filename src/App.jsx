@@ -1,9 +1,8 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, deleteTodo } from "./slices/todoSlice";
+import {v4 as uuidv4} from "uuid";
 
 function App() {
   const [input, setInput] = useState("");
@@ -13,12 +12,13 @@ function App() {
   const onAddClick = () => {
     dispatch(
       addTodo({
-        id: Math.random(),
+        id: uuidv4(),
         todo: input,
       })
     );
     setInput("");
   };
+  
 
   const onDeleteClick=(id)=>{
    dispatch(
@@ -47,7 +47,7 @@ function App() {
       </div>
       {
         todos?.length>0 && todos.map(todo=>
-         <div className="Add place-content-center m-5 flex p-px">
+         <div key={todo.id} className="Add place-content-center m-5 flex p-px">
           <input type="checkbox" className="w-5 h-5 mt-2 mr-5"/>
           <span className="text-white text-2xl font-mono mr-5">{todo.todo}</span>
           <button className="bg-yellow-300 text-black p-2 rounded-lg" 
